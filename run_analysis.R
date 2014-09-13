@@ -5,13 +5,13 @@
 # location of data = name of directory
 dataset ="UCI HAR Dataset"
 
-# read one sample set of data, whether "train" or "test"
-# Output: data frame of sample data, with columns
-#   subject: subject id performing activity
-#   activity: activity label as factor, for the activity being performed
-#   meanX, meanY, meanZ, stdX, stdY, stdZ: means and standard deviations for X, Y, Z axis, during period of each sample
+# read one sample set of measurements, whether "train" or "test"
+# Output: data frame of measurement data, with columns
+#   subject: subject id (as numeric) performing activity being performed
+#   activity: activity label (as factor), for the activity being performed
+#   meanX, meanY, meanZ, stdX, stdY, stdZ (as numeric): means and standard deviations for X, Y, Z axis, for each measurement
 # Inputs:
-#   source: source set, whether "train" or "test"
+#   source: source set, whether "train" or "test" as character string
 #   n: optional, number of samples to read from files, or -1 for all. Defaults to all
 
 readOneSample = function (source, n=-1) {
@@ -31,17 +31,17 @@ readOneSample = function (source, n=-1) {
         activity$label = factor(activity$activity,
                                 levels = activity_labels$actId,
                                 labels = activity_labels$actLabel)
-        df = cbind(subject, activity=activity$label, df)
+        df = cbind(subject=subject$subject, activity=activity$label, df)
         df
 }
 
-# read both set of data, "train" or "test", and merge them into a single data set
-# Output: data frame for train and set data, with columns
-#   subject: subject id performing activity
-#   activity: activity label as factor, for the activity being performed
-#   meanX, meanY, meanZ, stdX, stdY, stdZ: means and standard deviations for X, Y, Z axis, during period of each sample
+# read both set of measurement data, "train" or "test", and merge them into a single data set
+# Output: measurements data frame for train and set data, with columns
+#   subject: subject id being measured
+#   activity: activity label as factor, for the activity being performed during measurement
+#   meanX, meanY, meanZ, stdX, stdY, stdZ: means and standard deviations for X, Y, Z axis, for each measurement
 # Inputs:
-#   n: optional, number of samples to read from each files, or -1 for all. Defaults to all
+#   n: optional, number of samples to read from each file, or -1 for all. Defaults to all
 
 readAllSamples = function (n=-1) {
         rbind(readOneSample('train', n),
@@ -50,12 +50,12 @@ readAllSamples = function (n=-1) {
 
 library(plyr)
 
-# summarize data set along subject and activity
-# Output: data frame for summary data, with columns
+# summarize measurement data set along subject and activity
+# Output: data frame for summary measurement data, with columns
 #   subject: subject id performing activity
 #   activity: activity label as factor, for the activity being performed
-#   meanX, meanY, meanZ, stdX, stdY, stdZ: mean along all samples of mean and standard deviations for X, Y, Z axis
-# Input: data set to summarize
+#   meanX, meanY, meanZ, stdX, stdY, stdZ: mean across all measurements of mean and standard deviations for X, Y, Z axis
+# Input: measurement data set to summarize
 
 summarize = function (df) {
         ddply(df, .(subject, activity),
@@ -70,9 +70,9 @@ summarize = function (df) {
 
 # compute and dump summary data set into csv summary file
 # Output:
-#   return summary data set
+#   return summary of measurement data set
 #   write to disk 'summary.txt' file, which can be read back with read.csv('summary.txt')
-# Input: complete data set to summarize and dump
+# Input: complete measurement data set to summarize and dump
 
 dumpSummaryFile = function (df) {
         summary = summarize(df)

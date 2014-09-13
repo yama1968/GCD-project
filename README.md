@@ -3,12 +3,15 @@ title: "README"
 output: html_document
 ---
 
-All the work is performed by the run_analysis.R script.
+All the work is performed by the `run_analysis.R` script, by a simple command:
+```
+source('<directory>./run_analysis.R')
+```
 
 Where
 ---------------------------------------------------------------------------------------
 
-- you should run it with working file the directory where 'UCI HAR Dataset' extracted main directory is located
+- you should run it with **as working directory where the extracted 'UCI HAR Dataset' main directory is located**
 
 What, steps 1, 2, 3, 4
 ---------------------------------------------------------------------------------------
@@ -29,7 +32,7 @@ How
 
 - just run the script with working directory containing 'UCI HAR Dataset' head directory
 
-Input parameters
+Inputs
 ---------------------------------------------------------------------------------------
 
 - none
@@ -37,7 +40,8 @@ Input parameters
 Outputs
 ---------------------------------------------------------------------------------------
 
-- tidyDataComplete: complete data set as data frame
-- tidyDataSummary: summary data set with averages
-- 'summary.txt' csv file, produce in working directory, and can be read back with read.csv('summary.txt')
+- tidyDataComplete variable: complete measurements data set as data frame
+- tidyDataSummary variable: summary measurements data set with averages, grouped by subject and activity
+- 'summary.txt' CSV file, produced in working directory, and can be read back with `read.csv('summary.txt')`
+
 
