@@ -1,17 +1,19 @@
 ---
 title: "CodeBook.md"
-output: html_document
+output:
+  html_document:
+    theme: cosmo
 ---
 
 Source data
 ---------------------------------------------------------------------------------------
 
-Data is obtained from the files in the 'train' and 'test' directories, which contains one line per measurement (with xx='train' or 'test')
+Data is obtained from the files in the `train` and `test` directories, which contains one line per measurement (with xx=`train` or `test`)
 - subject_xx.txt with subject identifier as an integer
 - y_xx.txt with activity id as an integer
 - X_xx.txt with 561 numeric values in fixed width format (1 space, and then 561 16-characters numeric values)
 
-From top level 'UCI HAR Dataset' directory, we use
+From top level `UCI HAR Dataset` directory, we use
 - features.txt to determine that the mean and std variables are the first 6 numeric values of each sample measurement
 - activity_labels.txt to determine text label of activity from integer value
 
@@ -44,11 +46,19 @@ Summarize the complete data set:
 Result: summary data set
 ------------------------------------------------------------------------------------------
 
-- subject: a numeric, id of the subject being summarized
-- activity: a character string as factor, describing the activity being summarized
-- meanX, meanY, meanZ, stdX, stdY, stdZ: average of measured values across all sample, for respectively mean and standard deviations, in the X, Y, Z axis
+- subject: a numeric, id of the subject being summarized, with values between 1 and 30
+- activity: a character string as factor, describing the activity being summarized, which can take the following values:
+```
+WALKING
+WALKING_UPSTAIRS
+WALKING_DOWNSTAIRS
+SITTING
+STANDING
+LAYING
+```
+- meanX, meanY, meanZ, stdX, stdY, stdZ: average of measured values across all sample, for respectively mean and standard deviations, in the X, Y, Z axis. Their values range from -1.0000 to 1.0000
 
-'summary.txt' file can be read with:
+The summary ```summary.txt``` file can be read with the following R command:
 ```
 df = read.csv('summary.txt')
 ```
